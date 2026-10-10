@@ -1,0 +1,881 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ciberacoso en tu chat</title>
+<meta name="description" content="Infografía interactiva sobre el ciberacoso en México: datos, consecuencias, impacto social, soluciones y dónde pedir ayuda.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+
+/* Layout: un hilo de chat que se lee de arriba abajo. Bandas oscuras de "pantalla" (hero, consecuencias) alternan con papel claro (datos, impacto, soluciones); el cierre es una banda verde de ayuda. */
+:root{
+  --paper:#EEF1F7;      /* fondo general, gris frío de pantalla */
+  --surface:#FFFFFF;    /* burbujas y paneles */
+  --ink:#131A36;        /* texto principal y bandas nocturnas */
+  --ink-2:#465072;      /* texto secundario */
+  --rule:#CED5E4;       /* bordes y pistas de gráficas (no texto) */
+  --alert:#C1112E;      /* rojo de notificación: agresión */
+  --alert-soft:#FCE3E7;
+  --safe:#0A6A62;       /* verde de ayuda: soluciones */
+  --safe-soft:#DDF1EE;
+  --night-alert:#FF8A9B;/* acentos sobre fondo nocturno */
+  --night-safe:#7FD8CC;
+  --night-muted:#C9CFE0;
+  --f-display:'Archivo','Archivo Var','Arial Black','Helvetica Neue',sans-serif;
+  --f-body:'Atkinson Hyperlegible','Segoe UI',Roboto,Arial,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+  --wrap:1180px;
+  --bubble:22px 22px 22px 6px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+h1,h2,h3{font-family:var(--f-display);font-weight:800;font-stretch:108%;line-height:1.05;margin:0;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--alert);outline-offset:3px;border-radius:6px}
+.band--night :focus-visible,.band--safe :focus-visible{outline-color:#FFFFFF}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:clamp(16px,4vw,40px)}
+.band{padding-block:clamp(48px,7vw,88px)}
+.band--night{background:var(--ink);color:#FFFFFF}
+.band--safe{background:var(--safe);color:#FFFFFF}
+.band--surface{background:var(--surface)}
+.eyebrow{font-family:var(--f-mono);font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--alert)}
+.band--night .eyebrow,.hero .eyebrow{color:var(--night-alert)}
+.band--safe .eyebrow{color:var(--safe-soft)}
+.sec-head{display:grid;gap:12px;max-width:760px;margin-bottom:clamp(28px,4vw,44px)}
+.sec-head h2{font-size:clamp(32px,4.6vw,52px)}
+.sec-head p{font-size:19px;color:var(--ink-2);max-width:65ch}
+.band--night .sec-head p{color:var(--night-muted)}
+.band--safe .sec-head p{color:var(--safe-soft)}
+.cite{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.02em;color:var(--ink-2)}
+.band--night .cite{color:var(--night-muted)}
+.num{font-family:var(--f-display);font-weight:850;font-stretch:115%;font-variant-numeric:tabular-nums;line-height:.95}
+.mark{background:linear-gradient(var(--alert-soft),var(--alert-soft)) 0 88%/100% .38em no-repeat;transition:background-size .9s cubic-bezier(.2,.7,.2,1)}
+.js .mark.pending{background-size:0% .38em}
+
+/* ---------- barra superior: nombre a la derecha ---------- */
+.topbar{background:var(--ink);color:#FFFFFF;border-bottom:1px solid #2A3360}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-block:14px}
+.topbar .what{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--night-muted)}
+.author{text-align:right;margin-left:auto}
+.author strong{display:block;font-size:17px;line-height:1.2}
+.author span{font-size:14.5px;color:var(--night-muted)}
+
+/* ---------- hero ---------- */
+.hero{background:var(--ink);color:#FFFFFF;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(20px,4vw,48px);align-items:center;padding-block:clamp(36px,6vw,72px) 0}
+.hero-copy{display:grid;gap:22px;padding-bottom:clamp(36px,6vw,72px);min-width:0}
+.hero-copy>*{min-width:0}
+.title-wrap{position:relative;display:inline-block;justify-self:start;max-width:100%;padding-right:clamp(40px,7vw,96px);padding-top:clamp(18px,2.5vw,30px)}
+.hero h1{font-size:clamp(40px,7.2vw,96px);font-stretch:120%;font-weight:900;letter-spacing:-.02em;line-height:.9}
+.badge{position:absolute;right:0;top:0;background:var(--alert);color:#FFFFFF;border-radius:999px;padding:.32em .62em;font-family:var(--f-display);font-weight:850;font-stretch:110%;font-size:clamp(15px,1.9vw,24px);box-shadow:0 0 0 6px rgba(193,17,46,.28);white-space:nowrap;animation:pop .7s .25s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes pop{from{transform:scale(.3)}to{transform:scale(1)}}
+.hero .tagline{font-family:var(--f-display);font-weight:700;font-stretch:100%;font-size:clamp(23px,2.7vw,34px);line-height:1.15;color:var(--night-alert);max-width:20ch}
+.hero .def{font-size:19px;color:var(--night-muted);max-width:52ch}
+.hero .def b{color:#FFFFFF}
+.hero-stats{display:flex;flex-wrap:wrap;gap:12px 28px;padding-top:6px;border-top:1px solid #2A3360}
+.hero-stats div{display:grid;gap:2px;padding-top:14px}
+.hero-stats .num{font-size:clamp(34px,4vw,46px)}
+.hero-stats span:last-child{font-size:15px;color:var(--night-muted);max-width:22ch}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:12px 20px;font-weight:700;text-decoration:none;border:2px solid transparent;cursor:pointer;transition:transform .15s ease, background-color .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn img{width:24px;height:24px}
+.btn--alert{background:var(--alert);color:#FFFFFF}
+.btn--ghost{border-color:#5A6390;color:#FFFFFF;background:transparent}
+.btn--ghost:hover{background:#1E2650}
+.btn--light{background:#FFFFFF;color:var(--ink)}
+.btn--safe{background:var(--safe);color:#FFFFFF}
+.btn--outline{border-color:var(--rule);background:var(--surface);color:var(--ink)}
+.hero-art{align-self:end;min-width:0}
+.hero-art img{width:100%;max-width:560px;margin-left:auto}
+
+/* ---------- datos generales ---------- */
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.tile{all:unset;box-sizing:border-box;display:grid;gap:10px;align-content:start;background:var(--surface);border-radius:var(--bubble);padding:22px 22px 18px;cursor:pointer;box-shadow:0 1px 0 var(--rule),0 10px 26px -18px rgba(19,26,54,.45);transition:transform .18s ease, box-shadow .18s ease;min-width:0}
+.tile:hover{transform:translateY(-3px);box-shadow:0 1px 0 var(--rule),0 18px 34px -18px rgba(19,26,54,.55)}
+.tile:focus-visible{outline:3px solid var(--alert);outline-offset:3px}
+.tile .num{font-size:clamp(40px,4.4vw,56px);color:var(--alert)}
+.tile .num small{font-size:.5em;font-stretch:100%}
+.tile .lbl{font-size:16.5px;line-height:1.4}
+.tile .more{margin-top:auto;display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.tile .more::after{content:'+';display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--alert);color:#FFFFFF;font-size:16px;letter-spacing:0}
+.subhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:clamp(40px,6vw,64px) 0 18px}
+.subhead h3{font-size:clamp(24px,2.6vw,30px)}
+.explorer{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+.sit-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.sit{all:unset;box-sizing:border-box;display:grid;grid-template-columns:44px minmax(0,1fr);gap:4px 12px;align-items:center;padding:14px;border-radius:16px;background:var(--surface);border:2px solid transparent;cursor:pointer;transition:border-color .15s ease, background-color .15s ease}
+.sit img{width:44px;height:44px;grid-row:span 2}
+.sit b{font-size:15.5px;line-height:1.25}
+.sit span{font-family:var(--f-display);font-weight:800;font-stretch:112%;font-size:22px;color:var(--alert)}
+.sit:hover{border-color:var(--rule)}
+.sit[aria-pressed="true"]{border-color:var(--alert);background:var(--alert-soft)}
+.sit:focus-visible{outline:3px solid var(--alert);outline-offset:2px}
+.sit-detail{background:var(--ink);color:#FFFFFF;border-radius:var(--bubble);padding:clamp(22px,3vw,32px);display:grid;gap:16px;min-height:100%}
+.sit-detail h4{margin:0;font-family:var(--f-display);font-size:26px;font-stretch:108%;line-height:1.1}
+.sit-detail p{color:var(--night-muted)}
+.split{display:grid;gap:10px}
+.split-row{display:grid;grid-template-columns:86px minmax(0,1fr) 62px;align-items:center;gap:10px;font-size:15px}
+.track{height:14px;border-radius:99px;background:#2A3360;overflow:hidden}
+.fill{height:100%;border-radius:99px;transform-origin:left;transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.fill--m{background:var(--night-alert)}
+.fill--h{background:var(--night-safe)}
+.split-row b{font-family:var(--f-mono);font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--f-mono);font-size:12.5px;font-weight:600;border:1px solid #3A4472;border-radius:999px;padding:5px 11px;color:var(--night-muted)}
+
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--rule);border-radius:999px;padding:4px;gap:2px}
+.seg button{all:unset;cursor:pointer;padding:7px 14px;border-radius:999px;font-weight:700;font-size:14.5px;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#FFFFFF}
+.seg button:focus-visible{outline:3px solid var(--alert);outline-offset:1px}
+.band--night .seg{background:#1E2650;border-color:#3A4472}
+.band--night .seg button{color:var(--night-muted)}
+.band--night .seg button[aria-pressed="true"]{background:#FFFFFF;color:var(--ink)}
+
+.chart{display:grid;gap:12px;background:var(--surface);border-radius:20px;padding:clamp(18px,3vw,28px)}
+.bar-row{display:grid;grid-template-columns:150px minmax(0,1fr) 64px;align-items:center;gap:14px}
+.bar-row .name{font-weight:700;font-size:15.5px}
+.bar-row .track{background:var(--paper);height:22px}
+.bar-row .fill{background:var(--ink)}
+.bar-row.hot .fill{background:var(--alert)}
+.bar-row b{font-family:var(--f-mono);font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.chart-note{font-size:14px;color:var(--ink-2);margin-top:6px}
+.grow.run .fill{animation:grow .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* ---------- consecuencias ---------- */
+.conseq{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(20px,4vw,48px);align-items:start}
+.conseq figure{margin:0;display:grid;gap:14px}
+.conseq figure img{border-radius:20px}
+.callout{border-left:4px solid var(--night-alert);padding:6px 0 6px 16px;font-size:19px}
+.callout .num{font-size:30px;color:var(--night-alert)}
+.feel{display:grid;gap:12px}
+.feel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.feel-head h3{font-size:24px}
+.feel .bar-row{grid-template-columns:120px minmax(0,1fr) 64px}
+.feel .bar-row .name{color:#FFFFFF}
+.feel .bar-row .track{background:#232C58}
+.feel .bar-row .fill{background:var(--night-alert)}
+.feel.is-h .bar-row .fill{background:var(--night-safe)}
+.feel .bar-row b{color:#FFFFFF}
+.uni{margin-top:clamp(32px,5vw,52px);background:var(--surface);color:var(--ink);border-radius:var(--bubble);padding:clamp(20px,3vw,32px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(18px,3vw,40px)}
+.uni h3{font-size:26px}
+.uni p{color:var(--ink-2)}
+.stack{display:flex;height:46px;border-radius:12px;overflow:hidden;margin:6px 0 10px}
+.stack span{display:grid;place-items:center;color:#FFFFFF;font-family:var(--f-mono);font-weight:600;font-size:14px;min-width:0}
+.stack .s0{background:#5A6390}.stack .s1{background:var(--ink)}.stack .s2{background:var(--alert)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14.5px;color:var(--ink-2)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+details.more-info{border-top:1px solid var(--rule);padding-top:12px}
+details.more-info summary{cursor:pointer;font-weight:700;list-style:none;display:flex;align-items:center;gap:10px}
+details.more-info summary::-webkit-details-marker{display:none}
+details.more-info summary::before{content:'+';display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--alert);color:#FFFFFF;flex:none;transition:transform .2s ease}
+details.more-info[open] summary::before{transform:rotate(45deg)}
+details.more-info ul{margin:12px 0 0;padding-left:20px;display:grid;gap:6px;color:var(--ink)}
+.quote{margin:clamp(28px,4vw,44px) 0 0;display:grid;gap:10px;max-width:880px}
+.quote p{font-family:var(--f-display);font-weight:700;font-stretch:100%;font-size:clamp(21px,2.4vw,28px);line-height:1.25}
+
+/* ---------- impacto social ---------- */
+.impact{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.icard{background:var(--surface);border-radius:20px;padding:22px;display:grid;gap:10px;align-content:start;min-width:0}
+.icard img{width:48px;height:48px}
+.icard .num{font-size:clamp(34px,3.6vw,44px);color:var(--ink)}
+.icard .num.red{color:var(--alert)}
+.icard h3{font-size:19px;font-stretch:100%;line-height:1.2}
+.icard p{font-size:15.5px;color:var(--ink-2)}
+.chain{margin-top:24px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;background:var(--ink);color:#FFFFFF;border-radius:20px;overflow:hidden}
+.chain div{padding:20px 22px;display:grid;gap:6px;position:relative}
+.chain div+div{border-left:1px solid #2A3360}
+.chain b{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--night-alert)}
+.chain p{color:var(--night-muted);font-size:15.5px}
+
+/* ---------- multimedia ---------- */
+.media{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start}
+.mcard{background:var(--surface);border-radius:20px;padding:clamp(16px,2.4vw,22px);display:grid;gap:14px;min-width:0}
+.mcard-head{display:flex;align-items:center;gap:12px}
+.mcard-head img{width:40px;height:40px}
+.mcard-head h3{font-size:21px;font-stretch:100%}
+.mcard video{width:100%;border-radius:14px;background:var(--ink);aspect-ratio:16/9;max-width:100%}
+.player{display:grid;grid-template-columns:64px minmax(0,1fr);gap:16px;align-items:center;background:var(--ink);color:#FFFFFF;border-radius:16px;padding:16px}
+.play{all:unset;cursor:pointer;width:64px;height:64px;border-radius:50%;background:var(--alert);display:grid;place-items:center}
+.play:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px}
+.pico{display:block;width:0;height:0;border-style:solid;border-width:13px 0 13px 22px;border-color:transparent transparent transparent #FFFFFF;margin-left:5px}
+.play.is-playing .pico{width:20px;height:24px;border:0;margin:0;background:linear-gradient(90deg,#FFFFFF 0 7px,transparent 7px 13px,#FFFFFF 13px 20px)}
+.wave{display:flex;align-items:center;gap:3px;height:44px}
+.wave i{flex:1;background:#3A4472;border-radius:3px;min-height:4px;transition:background-color .2s ease}
+.wave i.on{background:var(--night-alert)}
+.player .time{font-family:var(--f-mono);font-size:13px;color:var(--night-muted);grid-column:2}
+.steps-audio{display:grid;gap:8px;font-size:15px;color:var(--ink-2);padding-left:20px;margin:0}
+
+/* ---------- soluciones ---------- */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.tab{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 16px 10px 10px;border-radius:999px;background:var(--surface);border:2px solid var(--rule);font-weight:700;font-size:15.5px}
+.tab img{width:32px;height:32px}
+.tab[aria-selected="true"]{background:var(--safe);border-color:var(--safe);color:#FFFFFF}
+.tab[aria-selected="true"] img{filter:brightness(0) invert(1)}
+.tab:focus-visible{outline:3px solid var(--alert);outline-offset:2px}
+.panel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(18px,3vw,36px);background:var(--surface);border-radius:var(--bubble);padding:clamp(20px,3vw,32px);align-items:center}
+.panel.no-img{grid-template-columns:minmax(0,1fr)}
+.panel h3{font-size:clamp(24px,2.6vw,30px);margin-bottom:14px}
+.todo{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.todo li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;align-items:start}
+.todo img{width:40px;height:40px}
+.todo b{display:block}
+.todo span{color:var(--ink-2);font-size:15.5px}
+.panel figure{margin:0}
+.panel figure img{border-radius:16px}
+.panel figcaption{font-size:13.5px;color:var(--ink-2);margin-top:8px}
+.quiz{margin-top:clamp(36px,5vw,56px)}
+.qgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.q{background:var(--surface);border-radius:var(--bubble);padding:20px;display:grid;gap:14px;align-content:start;border:2px solid transparent}
+.q p.case{font-size:17.5px}
+.q .opts{display:flex;gap:8px}
+.q .opts button{all:unset;cursor:pointer;padding:8px 18px;border-radius:999px;border:2px solid var(--rule);font-weight:700}
+.q .opts button:hover{border-color:var(--ink-2)}
+.q .opts button:focus-visible{outline:3px solid var(--alert);outline-offset:2px}
+.q .fb{font-size:15.5px;border-radius:12px;padding:12px 14px}
+.q.ok{border-color:var(--safe)} .q.ok .fb{background:var(--safe-soft);color:var(--ink)}
+.q.bad{border-color:var(--alert)} .q.bad .fb{background:var(--alert-soft);color:var(--ink)}
+.fb b{display:block}
+.score{font-family:var(--f-mono);font-weight:600;font-size:13px;letter-spacing:.06em;color:var(--ink-2)}
+
+/* ---------- llamado a la acción ---------- */
+.cta{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(20px,4vw,48px);align-items:start}
+.cta h2{font-size:clamp(34px,5vw,62px);font-stretch:118%;font-weight:900;line-height:.98}
+.cta h2 span{color:var(--safe-soft)}
+.steps{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:14px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:48px minmax(0,1fr);gap:14px;align-items:start;counter-increment:s}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:#FFFFFF;color:var(--safe);font-family:var(--f-display);font-weight:850;font-size:22px}
+.steps b{display:block;font-size:19px}
+.steps span{color:var(--safe-soft);font-size:15.5px}
+.help{background:var(--surface);color:var(--ink);border-radius:var(--bubble);padding:clamp(20px,3vw,28px);display:grid;gap:14px}
+.help h3{font-size:22px;font-stretch:100%}
+.contact{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:12px 0;border-top:1px solid var(--rule)}
+.contact .who{font-size:14.5px;color:var(--ink-2)}
+.contact .val{font-family:var(--f-mono);font-weight:600;font-size:17px;user-select:all;overflow-wrap:anywhere}
+.copy{all:unset;cursor:pointer;grid-row:span 2;font-weight:700;font-size:13.5px;padding:8px 12px;border-radius:999px;border:2px solid var(--rule)}
+.copy:focus-visible{outline:3px solid var(--alert);outline-offset:2px}
+.copy.done{background:var(--safe);border-color:var(--safe);color:#FFFFFF}
+.qr{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:center;background:var(--paper);border-radius:16px;padding:14px}
+.qr img{width:120px;height:120px;border-radius:8px}
+.qr p{font-size:15px}
+.qr a{font-weight:700}
+.cta-tools{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.tts-note{font-size:14px;color:var(--safe-soft);margin-top:8px}
+
+/* ---------- referencias ---------- */
+.refs{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(20px,4vw,48px)}
+.refs h2{font-size:30px;margin-bottom:16px}
+.reflist{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.reflist li{padding-left:2em;text-indent:-2em;font-size:15.5px;line-height:1.5;overflow-wrap:anywhere}
+.reflist a{color:var(--safe)}
+.a11y{background:var(--paper);border-radius:20px;padding:20px;display:grid;gap:10px;align-content:start}
+.a11y h3{font-size:19px;font-stretch:100%}
+.a11y ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14.5px;color:var(--ink-2)}
+.ctable{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:6px}
+.ctable td{padding:5px 4px;border-top:1px solid var(--rule)}
+.ctable td:last-child{font-family:var(--f-mono);font-weight:600;text-align:right;white-space:nowrap}
+.sw{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:4px;border:1px solid var(--rule)}
+footer{background:var(--ink);color:var(--night-muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;padding-block:22px;font-size:14px}
+footer b{color:#FFFFFF}
+footer .url{font-family:var(--f-mono);font-size:13px;overflow-wrap:anywhere;color:#FFFFFF}
+
+/* ---------- modal ---------- */
+.modal{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:16px;background:rgba(19,26,54,.62)}
+.modal-box{background:var(--surface);color:var(--ink);border-radius:24px;max-width:620px;width:100%;max-height:calc(100% - 32px);overflow:auto;padding:clamp(22px,3vw,32px);display:grid;gap:14px;animation:rise .25s ease both}
+@keyframes rise{from{transform:translateY(16px)}to{transform:none}}
+.modal-box h3{font-size:clamp(24px,3vw,30px)}
+.modal-box .num{font-size:52px;color:var(--alert)}
+.modal-box ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.modal-close{justify-self:end;all:unset;cursor:pointer;font-weight:700;padding:8px 14px;border-radius:999px;border:2px solid var(--rule)}
+.modal-close:focus-visible{outline:3px solid var(--alert);outline-offset:2px}
+.mini{width:100%;border-collapse:collapse;font-size:15px}
+.mini th,.mini td{padding:6px 4px;border-top:1px solid var(--rule);text-align:left}
+.mini td+td,.mini th+th{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.mini tr.hl td{background:var(--alert-soft);font-weight:700}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .tiles,.impact{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .explorer,.conseq,.uni,.media,.panel,.cta,.refs{grid-template-columns:minmax(0,1fr)}
+  .hero .wrap{grid-template-columns:minmax(0,1fr)}
+  .hero-art img{max-width:420px;margin-inline:auto}
+}
+@media (max-width:620px){
+  .tiles,.impact,.qgrid,.sit-list{grid-template-columns:minmax(0,1fr)}
+  .chain{grid-template-columns:minmax(0,1fr)}
+  .chain div+div{border-left:0;border-top:1px solid #2A3360}
+  .bar-row,.feel .bar-row{grid-template-columns:96px minmax(0,1fr) 54px;gap:10px}
+  .author{text-align:left;margin-left:0}
+  .qr{grid-template-columns:96px minmax(0,1fr)}
+  .qr img{width:96px;height:96px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <span class="what">Infografía interactiva · Narrativa multimedia para generar conciencia social</span>
+    <div class="author"><strong>Chiara Mino Villacaña</strong><span>Licenciatura en Comunicación</span></div>
+  </div>
+</header>
+
+<main>
+<section class="hero" aria-labelledby="titulo">
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow">Problema social · Violencia digital</span>
+      <div class="title-wrap">
+        <h1 id="titulo">Ciberacoso</h1>
+        <span class="badge" aria-label="18.9 millones de víctimas"><span data-count="18.9" data-dec="1">18.9</span>&nbsp;M</span>
+      </div>
+      <p class="tagline">Lo que se escribe en un chat también lastima.</p>
+      <p class="def">El ciberacoso es un acto <b>intencional</b>, de una persona o de un grupo, para <b>dañar o molestar</b> a alguien usando internet y otras tecnologías. Puede causar daños morales, psicológicos y económicos (INEGI, 2025).</p>
+      <div class="hero-stats">
+        <div><span class="num" data-count="21" data-suffix=" %">21 %</span><span>de quienes usan internet en México lo vivió en un año</span></div>
+        <div><span class="num">1 de 5</span><span>personas usuarias de 12 años o más</span></div>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn--alert" href="#datos">Ver los datos</a>
+        <a class="btn btn--ghost" href="#multimedia"><img src="icons/video.png" alt="" style="filter:brightness(0) invert(1)">Video de 30 s</a>
+        <a class="btn btn--ghost" href="#ayuda">Dónde pedir ayuda</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <img src="img/hero.jpg" width="900" height="1000" alt="Ilustración: pantalla de bloqueo de un celular a las 23:47 con notificaciones agresivas de un grupo escolar y de números desconocidos.">
+    </div>
+  </div>
+</section>
+
+<section class="band" id="datos" aria-labelledby="h-datos">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Datos generales · INEGI, MOCIBA 2024</span>
+      <h2 id="h-datos">¿Qué tan común es?</h2>
+      <p>Entre julio de 2023 y agosto de 2024, <span class="mark pending">18.9 millones de personas</span> usuarias de internet de 12 años o más vivieron alguna situación de ciberacoso en México. Toca cada tarjeta para ver el detalle.</p>
+    </div>
+    <div class="tiles">
+      <button class="tile" type="button" data-modal="total"><span class="num" data-count="18.9" data-dec="1">18.9<small> M</small></span><span class="lbl">víctimas en un año: 10.6 millones de mujeres y 8.3 millones de hombres</span><span class="more">Ver detalle</span></button>
+      <button class="tile" type="button" data-modal="sexo"><span class="num">22.2<small> %</small></span><span class="lbl">de las mujeres usuarias lo vivió, frente a 19.6 % de los hombres</span><span class="more">Ver por edad</span></button>
+      <button class="tile" type="button" data-modal="jovenes"><span class="num">31.1<small> %</small></span><span class="lbl">de las mujeres de 20 a 29 años: el grupo más afectado, en plena edad universitaria</span><span class="more">Ver detalle</span></button>
+      <button class="tile" type="button" data-modal="agresores"><span class="num">62.9<small> %</small></span><span class="lbl">de las víctimas no conocía a quien la acosaba</span><span class="more">¿Quién acosa?</span></button>
+    </div>
+
+    <div class="subhead"><h3>¿Cómo ocurre?</h3><span class="cite">% de las víctimas que vivió cada situación · una persona puede vivir varias</span></div>
+    <div class="explorer">
+      <div class="sit-list" role="group" aria-label="Formas de ciberacoso">
+        <button class="sit" type="button" data-sit="0" aria-pressed="true"><img src="icons/mascara.png" alt=""><b>Contacto con identidades falsas</b><span>36.0 %</span></button>
+        <button class="sit" type="button" data-sit="1" aria-pressed="false"><img src="icons/mensaje.png" alt=""><b>Mensajes ofensivos</b><span>34.0 %</span></button>
+        <button class="sit" type="button" data-sit="2" aria-pressed="false"><img src="icons/llamada.png" alt=""><b>Llamadas ofensivas</b><span>22.6 %</span></button>
+        <button class="sit" type="button" data-sit="3" aria-pressed="false"><img src="icons/alerta.png" alt=""><b>Insinuaciones o propuestas sexuales</b><span>22.3 %</span></button>
+        <button class="sit" type="button" data-sit="4" aria-pressed="false"><img src="icons/imagen.png" alt=""><b>Recibir contenido sexual</b><span>22.3 %</span></button>
+        <button class="sit" type="button" data-sit="5" aria-pressed="false"><img src="icons/suplanta.png" alt=""><b>Suplantación de identidad</b><span>19.8 %</span></button>
+      </div>
+      <div class="sit-detail" aria-live="polite" id="sit-detail"></div>
+    </div>
+
+    <div class="subhead"><h3>¿Dónde ocurre?</h3>
+      <div class="seg" role="group" aria-label="Filtrar medios por sexo">
+        <button type="button" data-medio="t" aria-pressed="true">Total</button>
+        <button type="button" data-medio="m" aria-pressed="false">Mujeres</button>
+        <button type="button" data-medio="h" aria-pressed="false">Hombres</button>
+      </div>
+    </div>
+    <div class="chart grow" id="medios" role="figure" aria-label="Medios digitales usados para el ciberacoso"></div>
+    <p class="chart-note">Porcentaje de víctimas que fue acosada por cada medio. Una persona puede marcar más de uno, por eso la suma pasa de 100 %. Fuente: INEGI (2025).</p>
+  </div>
+</section>
+
+<section class="band band--night" id="consecuencias" aria-labelledby="h-cons">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Consecuencias</span>
+      <h2 id="h-cons">No se queda en la pantalla</h2>
+      <p>Las víctimas reportan emociones que siguen ahí cuando se apaga el celular. En casos graves, el ciberacoso se relaciona con depresión, autolesiones y hasta suicidio.</p>
+    </div>
+    <div class="conseq">
+      <figure>
+        <img src="img/consecuencias.jpg" width="1000" height="680" alt="Ilustración: notificaciones que caen una sobre otra con las palabras enojo, desconfianza, miedo, estrés, inseguridad, frustración, nervios y aislamiento.">
+        <div class="callout"><span class="num">Más del doble</span><br>de miedo reportan las mujeres que los hombres: 34.5 % frente a 16.0 % (INEGI, 2025).</div>
+      </figure>
+      <div class="feel" id="feel">
+        <div class="feel-head"><h3>¿Qué sintieron las víctimas?</h3>
+          <div class="seg" role="group" aria-label="Ver efectos por sexo">
+            <button type="button" data-feel="m" aria-pressed="true">Mujeres</button>
+            <button type="button" data-feel="h" aria-pressed="false">Hombres</button>
+          </div>
+        </div>
+        <div id="feel-bars" class="grow"></div>
+        <p class="cite">% de víctimas de cada sexo que reportó cada efecto · Fuente: INEGI (2025)</p>
+      </div>
+    </div>
+
+    <div class="uni">
+      <div style="display:grid;gap:12px;align-content:start">
+        <span class="eyebrow">En la universidad</span>
+        <h3>3 de cada 4 estudiantes del estudio lo vivieron alguna vez</h3>
+        <p>En un estudio con 662 estudiantes de la Universidad de Guadalajara (18 a 25 años), solo 23.4 % nunca había sido víctima de ciberacoso (Vargas Jiménez et al., 2019).</p>
+      </div>
+      <div style="display:grid;gap:8px;align-content:start">
+        <div class="stack" role="img" aria-label="23.4 % nunca, 63.7 % ocasional, 12.8 % severa">
+          <span class="s0" style="width:23.4%">23.4 %</span><span class="s1" style="width:63.7%">63.7 %</span><span class="s2" style="width:12.9%">12.8 %</span>
+        </div>
+        <div class="legend"><span><i style="background:#5A6390"></i>Nunca</span><span><i style="background:var(--ink)"></i>Ocasional</span><span><i style="background:var(--alert)"></i>Severa</span></div>
+        <details class="more-info">
+          <summary>¿Qué les pasa a las víctimas severas?</summary>
+          <ul>
+            <li>Tienen más síntomas de depresión: tristeza, problemas de sueño y dificultad para concentrarse.</li>
+            <li>Sienten menos aceptación de sus amigos, de su familia, de su madre y de su padre.</li>
+            <li>Se sienten menos parte de su grupo escolar y perciben menos apoyo del profesorado.</li>
+            <li>Suelen no pedir ayuda porque creen que, como adultos, deben resolverlo solos.</li>
+          </ul>
+        </details>
+      </div>
+    </div>
+
+    <blockquote class="quote">
+      <p>“Desde las autolesiones hasta el suicidio, hemos visto cómo el ciberacoso, en todas sus formas, puede devastar la vida de las y los jóvenes y de sus familias.”</p>
+      <span class="cite">Hans Kluge, director regional de la OMS para Europa (OMS Europa, 2024). Traducción propia.</span>
+    </blockquote>
+  </div>
+</section>
+
+<section class="band" id="impacto" aria-labelledby="h-imp">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Impacto social</span>
+      <h2 id="h-imp">Un problema que crece en silencio</h2>
+      <p>El ciberacoso no afecta solo a una persona. Cuando casi nadie denuncia y el agresor se esconde detrás de una cuenta falsa, la violencia queda impune y los espacios digitales donde estudiamos y convivimos se vuelven inseguros.</p>
+    </div>
+    <div class="impact">
+      <article class="icard"><img src="icons/megafono.png" alt=""><span class="num red mark pending">13.2 %</span><h3>de las mujeres denunció</h3><p>Y solo 8.6 % de los hombres, ante el Ministerio Público, la Fiscalía o la plataforma. Ante la policía: 2.2 % y 1.3 % (INEGI, 2025).</p></article>
+      <article class="icard"><img src="icons/mascara.png" alt=""><span class="num">6 de 10</span><h3>agresores son desconocidos</h3><p>El anonimato hace difícil identificar y sancionar a quien acosa, y genera desconfianza en las redes (INEGI, 2025).</p></article>
+      <article class="icard"><img src="icons/comunidad.png" alt=""><span class="num">1 de 6</span><h3>adolescentes de 11 a 15 años</h3><p>vivió ciberacoso en 44 países de Europa, Asia Central y Canadá. La cifra subió desde 2018 en niños (12 % a 15 %) y en niñas (13 % a 16 %) (OMS Europa, 2024).</p></article>
+      <article class="icard"><img src="icons/reloj.png" alt=""><span class="num">6 h</span><h3>al día en línea, hasta</h3><p>pasan algunos jóvenes. Con tanto tiempo conectados, un pequeño aumento del acoso afecta a miles de personas (OMS Europa, 2024).</p></article>
+    </div>
+    <div class="chain" aria-label="Cómo se extiende el impacto">
+      <div><b>En la persona</b><p>Enojo, miedo, desconfianza y, en casos severos, depresión.</p></div>
+      <div><b>En la escuela</b><p>Menos sentido de pertenencia al grupo y menos apoyo percibido. En México, 61.6 % de las víctimas de 12 a 17 años fue acosada por alguien de su misma edad.</p></div>
+      <div><b>En la sociedad</b><p>Pocas denuncias, impunidad y redes donde la violencia se normaliza.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band band--surface" id="multimedia" aria-labelledby="h-mm">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Mira y escucha</span>
+      <h2 id="h-mm">El ciberacoso en 30 segundos</h2>
+      <p>Un video corto con los datos clave y una pieza de audio que muestra cómo se siente una bandeja de mensajes que no para.</p>
+    </div>
+    <div class="media">
+      <div class="mcard">
+        <div class="mcard-head"><img src="icons/video.png" alt=""><h3>Video: una noche, 27 notificaciones</h3></div>
+        <video id="video" controls preload="metadata" playsinline poster="img/video-poster.jpg" src="media/ciberacoso-30s.mp4" aria-label="Video de 30 segundos sobre el ciberacoso con subtítulos">
+          <track id="vtt" kind="captions" srclang="es" label="Español" src="data:text/vtt;base64,V0VCVlRUCgowMDowMC4wMDAgLS0+IDAwOjA2LjAwMApMYXMgMjM6NDcuIExsZWdhbiBtZW5zYWplcyBkZSB1biBncnVwbyB5IGRlIG7Dum1lcm9zIGRlc2Nvbm9jaWRvcy4KCjAwOjA2LjAwMCAtLT4gMDA6MTIuMDAwCkVuIE3DqXhpY28sIDE4LjkgbWlsbG9uZXMgZGUgcGVyc29uYXMgdXN1YXJpYXMgZGUgaW50ZXJuZXQgdml2aWVyb24gY2liZXJhY29zbyBlbiB1biBhw7FvOiAxIGRlIGNhZGEgNS4KCjAwOjEyLjAwMCAtLT4gMDA6MTguMDAwCkVsIGdydXBvIG3DoXMgYWZlY3RhZG86IG11amVyZXMgZGUgMjAgYSAyOSBhw7FvcyAoMzEuMSAlKSwgZnJlbnRlIGEgMjIuMSAlIGRlIGxvcyBob21icmVzIGRlIGVzYSBlZGFkLgoKMDA6MTguMDAwIC0tPiAwMDoyNC4wMDAKNiBkZSBjYWRhIDEwIHbDrWN0aW1hcyBubyBjb25vY8OtYW4gYSBxdWllbiBsYXMgYWNvc2FiYS4gTXV5IHBvY2FzIGxvIGRlbnVuY2lhbi4KCjAwOjI0LjAwMCAtLT4gMDA6MzAuMDAwCk5vIHJlc3BvbmRhcywgZ3VhcmRhIGV2aWRlbmNpYSwgYmxvcXVlYSB5IHJlcG9ydGEsIGRlbnVuY2lhIGFsIDA4OC4gU2kgbG8gdmVzLCBubyBsbyBjb21wYXJ0YXMuIFNpIGxvIHZpdmVzLCBubyB0ZSBjYWxsZXMuCg==" default>
+        </video>
+        <p class="cite">Animación propia con datos de INEGI (2025). Incluye subtítulos en español.</p>
+      </div>
+      <div class="mcard">
+        <div class="mcard-head"><img src="icons/audio.png" alt=""><h3>Audio: así suena la bandeja</h3></div>
+        <div class="player">
+          <button class="play" id="play" type="button" aria-label="Reproducir audio"><span class="pico" id="play-ico" aria-hidden="true"></span></button>
+          <div class="wave" id="wave" aria-hidden="true"></div>
+          <span class="time" id="atime">0:00 / 0:20</span>
+        </div>
+        <audio id="audio" preload="auto" src="media/bandeja.mp3"></audio>
+        <ol class="steps-audio">
+          <li>0 a 12 s: las notificaciones llegan cada vez más rápido.</li>
+          <li>12 s: un clic. La cuenta queda bloqueada.</li>
+          <li>13 a 20 s: calma. Pedir ayuda también es una forma de cortar el ruido.</li>
+        </ol>
+        <p class="cite">Paisaje sonoro original. Usa audífonos y empieza con el volumen bajo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="soluciones" aria-labelledby="h-sol">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Soluciones</span>
+      <h2 id="h-sol">Cada quien puede cortar la cadena</h2>
+      <p>La OMS y la investigación con universitarios coinciden: el ciberacoso se atiende entre todos, con la persona afectada, quienes lo presencian, la familia, la escuela, las plataformas y las autoridades.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Soluciones por actor">
+      <button class="tab" role="tab" id="tab-0" aria-controls="panel-0" aria-selected="true" tabindex="0"><img src="icons/escudo.png" alt="">Si te pasa a ti</button>
+      <button class="tab" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="false" tabindex="-1"><img src="icons/ojo.png" alt="">Si lo ves</button>
+      <button class="tab" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1"><img src="icons/universidad.png" alt="">Universidad y familia</button>
+      <button class="tab" role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false" tabindex="-1"><img src="icons/bloquear.png" alt="">Plataformas y autoridades</button>
+    </div>
+
+    <div class="panel" role="tabpanel" id="panel-0" aria-labelledby="tab-0">
+      <div><h3>Protégete y deja registro</h3>
+        <ul class="todo">
+          <li><img src="icons/mensaje.png" alt=""><div><b>No respondas ni reenvíes</b><span>Responder puede hacer que la agresión crezca.</span></div></li>
+          <li><img src="icons/captura.png" alt=""><div><b>Guarda evidencia</b><span>Capturas con fecha y hora, enlaces y nombre de usuario.</span></div></li>
+          <li><img src="icons/bloquear.png" alt=""><div><b>Bloquea y reporta</b><span>Es lo que más hacen las víctimas: 71.2 % de las mujeres y 60.9 % de los hombres.</span></div></li>
+          <li><img src="icons/candado.png" alt=""><div><b>Cambia contraseñas y revisa tu privacidad</b><span>Sobre todo si hubo suplantación o rastreo de tus cuentas.</span></div></li>
+          <li><img src="icons/apoyo.png" alt=""><div><b>Cuéntaselo a alguien de confianza</b><span>Solo 8.1 % de las mujeres y 4.8 % de los hombres lo hizo (INEGI, 2025).</span></div></li>
+        </ul>
+      </div>
+      <figure><img src="img/evidencia.jpg" width="1000" height="720" alt="Ilustración: captura de un chat con mensajes agresivos marcada con el sello Captura guardada, evidencia."><figcaption>Una captura con fecha y hora sirve como prueba al denunciar.</figcaption></figure>
+    </div>
+    <div class="panel no-img" role="tabpanel" id="panel-1" aria-labelledby="tab-1" hidden>
+      <div><h3>Quien mira también participa</h3>
+        <ul class="todo">
+          <li><img src="icons/imagen.png" alt=""><div><b>No compartas ni reacciones</b><span>Cada reenvío o “me gusta” amplía el daño y la audiencia.</span></div></li>
+          <li><img src="icons/apoyo.png" alt=""><div><b>Escríbele a la persona afectada</b><span>Un mensaje de apoyo ayuda a que no se sienta sola o solo.</span></div></li>
+          <li><img src="icons/megafono.png" alt=""><div><b>Reporta la publicación o la cuenta</b><span>Así la plataforma puede revisar y retirar el contenido.</span></div></li>
+          <li><img src="icons/comunidad.png" alt=""><div><b>Si pasa en tu grupo, dilo con respeto</b><span>Marcar el límite ayuda a que el grupo no normalice la violencia.</span></div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel no-img" role="tabpanel" id="panel-2" aria-labelledby="tab-2" hidden>
+      <div><h3>Redes de apoyo cerca de ti</h3>
+        <ul class="todo">
+          <li><img src="icons/universidad.png" alt=""><div><b>Tutorías y apoyo psicológico</b><span>Programas de tutoría, intervención psicoeducativa y apoyo terapéutico para víctimas y agresores (Vargas Jiménez et al., 2019).</span></div></li>
+          <li><img src="icons/comunidad.png" alt=""><div><b>Compañeros mediadores</b><span>Estudiantes formados para ayudar a resolver conflictos y promover una convivencia pacífica y empática.</span></div></li>
+          <li><img src="icons/apoyo.png" alt=""><div><b>Comunicación abierta en casa</b><span>Sentirse aceptado por la familia y los amigos se relaciona con menos ciberacoso (Vargas Jiménez et al., 2019).</span></div></li>
+          <li><img src="icons/escudo.png" alt=""><div><b>Alfabetización digital</b><span>La OMS pide que docentes, madres, padres y líderes comunitarios enseñen seguridad digital (OMS Europa, 2024).</span></div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel" role="tabpanel" id="panel-3" aria-labelledby="tab-3" hidden>
+      <div><h3>Reglas claras en línea</h3>
+        <ul class="todo">
+          <li><img src="icons/bloquear.png" alt=""><div><b>Herramientas para bloquear y reportar</b><span>Fáciles de encontrar y con respuesta rápida.</span></div></li>
+          <li><img src="icons/escudo.png" alt=""><div><b>Entornos digitales sanos</b><span>La OMS apoya a los gobiernos para exigir a las empresas tecnológicas espacios seguros para niñas, niños y jóvenes.</span></div></li>
+          <li><img src="icons/megafono.png" alt=""><div><b>Denuncia que sí avance</b><span>Más denuncias y mejor atención ayudan a romper la impunidad.</span></div></li>
+        </ul>
+      </div>
+      <figure><img src="img/bloquear.jpg" width="1000" height="720" alt="Ilustración: celular con el aviso ¿Bloquear y reportar a @cuenta_sin_foto? y los botones Bloquear y reportar, y Cancelar."><figcaption>Bloquear y reportar se hace desde la misma aplicación.</figcaption></figure>
+    </div>
+
+    <div class="quiz" id="quiz">
+      <div class="subhead"><h3>Ponte a prueba: ¿esto es ciberacoso?</h3><span class="score" id="score">0 de 4 respondidas</span></div>
+      <div class="qgrid" id="qgrid"></div>
+    </div>
+  </div>
+</section>
+
+<section class="band band--safe" id="ayuda" aria-labelledby="h-cta">
+  <div class="wrap cta">
+    <div>
+      <span class="eyebrow">Llamado a la acción</span>
+      <h2 id="h-cta" style="margin-top:12px">Si lo ves, no lo compartas. <span>Si lo vives, no te calles.</span></h2>
+      <ol class="steps">
+        <li><div><b>Detente antes de enviar</b><span>Si no lo dirías en persona, no lo escribas.</span></div></li>
+        <li><div><b>Guarda evidencia</b><span>Capturas con fecha, hora y usuario.</span></div></li>
+        <li><div><b>Bloquea y reporta</b><span>En la misma aplicación donde ocurrió.</span></div></li>
+        <li><div><b>Pide ayuda y denuncia</b><span>No tienes que resolverlo sola o solo.</span></div></li>
+      </ol>
+      <div class="cta-tools">
+        <button class="btn btn--light" id="tts" type="button"><img src="icons/audio.png" alt="">Escuchar este mensaje</button>
+        <button class="btn btn--ghost" id="share" type="button" style="border-color:#B3E6DF">Copiar enlace de la infografía</button>
+      </div>
+      <p class="tts-note" id="tts-note" aria-live="polite"></p>
+    </div>
+    <div class="help">
+      <h3>Dónde pedir ayuda en México</h3>
+      <div class="contact"><span class="who">Centro Nacional de Atención Ciudadana de la Guardia Nacional · 24 horas, todo el año</span><button class="copy" type="button" data-copy="088">Copiar</button><span class="val">088</span></div>
+      <div class="contact"><span class="who">Policía Cibernética de la Ciudad de México</span><button class="copy" type="button" data-copy="55 5242 5100 ext. 5086">Copiar</button><span class="val">55 5242 5100 ext. 5086</span></div>
+      <div class="contact"><span class="who">CERT-MX, reporte de perfiles e incidentes en línea</span><button class="copy" type="button" data-copy="cert-mx@sspc.gob.mx">Copiar</button><span class="val">cert-mx@sspc.gob.mx</span></div>
+      <div class="qr">
+        <img src="img/qr-inegi.png" width="120" height="120" alt="Código QR que lleva al reporte de resultados del MOCIBA 2024 del INEGI.">
+        <p>Escanea el código para consultar los datos oficiales del INEGI, o <a href="https://www.inegi.org.mx/contenidos/programas/mociba/2024/doc/mociba2024_resultados.pdf" target="_blank" rel="noopener">abre el reporte aquí</a>.</p>
+      </div>
+      <p class="cite">Si estás en peligro inmediato, llama al 911.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band band--surface" id="referencias" aria-labelledby="h-ref">
+  <div class="wrap refs">
+    <div>
+      <h2 id="h-ref">Referencias</h2>
+      <ol class="reflist">
+        <li>Instituto Nacional de Estadística y Geografía. (2025). <i>Módulo sobre Ciberacoso (MOCIBA) 2024: Principales resultados</i>. INEGI. <a href="https://www.inegi.org.mx/contenidos/programas/mociba/2024/doc/mociba2024_resultados.pdf" target="_blank" rel="noopener">https://www.inegi.org.mx/contenidos/programas/mociba/2024/doc/mociba2024_resultados.pdf</a></li>
+        <li>Oficina Regional para Europa de la Organización Mundial de la Salud. (2024, 27 de marzo). <i>One in six school-aged children experiences cyberbullying, finds new WHO/Europe study</i> [Comunicado de prensa]. <a href="https://www.who.int/europe/news/item/27-03-2024-one-in-six-school-aged-children-experiences-cyberbullying--finds-new-who-europe-study" target="_blank" rel="noopener">https://www.who.int/europe/news/item/27-03-2024-one-in-six-school-aged-children-experiences-cyberbullying--finds-new-who-europe-study</a></li>
+        <li>Vargas Jiménez, E., Castro Castañeda, R., Huerta Zúñiga, C. G., Domínguez Mora, R. y Medina Centeno, R. (2019). Variables individuales y escolares en estudiantes universitarios víctimas de ciberacoso. <i>RIDE. Revista Iberoamericana para la Investigación y el Desarrollo Educativo, 10</i>(19), e057. <a href="https://doi.org/10.23913/ride.v10i19.607" target="_blank" rel="noopener">https://doi.org/10.23913/ride.v10i19.607</a></li>
+        <li>Directorio de contactos: ADN40. (2024, 27 de octubre). <i>¿Cómo denunciar acoso cibernético en CDMX?</i> <a href="https://www.adn40.mx/ciudad/2024-10-27/como-denunciar-acoso-cibernetico-en-cdmx/" target="_blank" rel="noopener">https://www.adn40.mx/ciudad/2024-10-27/como-denunciar-acoso-cibernetico-en-cdmx/</a></li>
+      </ol>
+    </div>
+    <div class="a11y">
+      <h3>Accesibilidad y formatos</h3>
+      <ul>
+        <li>Imágenes en JPEG optimizado (de 43 a 70 KB cada una).</li>
+        <li>Íconos propios en PNG con fondo transparente.</li>
+        <li>Video con subtítulos en español y textos alternativos en todas las imágenes.</li>
+        <li>Navegación completa con teclado.</li>
+      </ul>
+      <details class="more-info" open>
+        <summary>Contraste de color validado (WCAG AA ≥ 4.5:1)</summary>
+        <table class="ctable"><tbody>
+          <tr><td><span class="sw" style="background:#131A36"></span>Texto #131A36 sobre <span class="sw" style="background:#EEF1F7"></span>#EEF1F7</td><td>15.11:1</td></tr>
+          <tr><td><span class="sw" style="background:#465072"></span>Texto #465072 sobre <span class="sw" style="background:#FFFFFF"></span>#FFFFFF</td><td>7.92:1</td></tr>
+          <tr><td><span class="sw" style="background:#C1112E"></span>Rojo #C1112E sobre <span class="sw" style="background:#EEF1F7"></span>#EEF1F7</td><td>5.48:1</td></tr>
+          <tr><td><span class="sw" style="background:#FFFFFF"></span>Blanco sobre <span class="sw" style="background:#C1112E"></span>#C1112E</td><td>6.20:1</td></tr>
+          <tr><td><span class="sw" style="background:#FFFFFF"></span>Blanco sobre <span class="sw" style="background:#0A6A62"></span>#0A6A62</td><td>6.46:1</td></tr>
+          <tr><td><span class="sw" style="background:#FF8A9B"></span>Rosa #FF8A9B sobre <span class="sw" style="background:#131A36"></span>#131A36</td><td>7.62:1</td></tr>
+          <tr><td><span class="sw" style="background:#C9CFE0"></span>Texto #C9CFE0 sobre <span class="sw" style="background:#131A36"></span>#131A36</td><td>10.97:1</td></tr>
+        </tbody></table>
+      </details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Elaborado por <b>Chiara Mino Villacaña</b> · Licenciatura en Comunicación · Octubre de 2026</span>
+    <span class="url">Enlace: https://raw.githack.com/JaredPS03/pp/infografia-ciberacoso/index.html</span>
+  </div>
+</footer>
+
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-box" id="modal-box"></div>
+</div>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- contadores ---------- */
+  function countUp(el){
+    var target = parseFloat(el.getAttribute('data-count')), dec = +(el.getAttribute('data-dec')||0);
+    var suffix = el.getAttribute('data-suffix') || '';
+    var small = el.querySelector('small'); var smallHTML = small ? small.outerHTML : '';
+    if (reduce) return;
+    var t0 = null, dur = 1400;
+    function step(ts){
+      if(!t0) t0 = ts; var k = Math.min(1,(ts-t0)/dur); k = 1-Math.pow(1-k,3);
+      el.innerHTML = (target*k).toFixed(dec) + suffix + smallHTML;
+      if(k<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  document.querySelectorAll('[data-count]').forEach(countUp);
+
+  /* ---------- resaltados y barras al entrar en pantalla ---------- */
+  var marks = document.querySelectorAll('.mark.pending');
+  var grows = document.querySelectorAll('.grow');
+  if ('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        var el = e.target;
+        if(el.classList.contains('mark')) el.classList.remove('pending');
+        else { el.classList.remove('run'); void el.offsetWidth; el.classList.add('run'); }
+        io.unobserve(el);
+      });
+    },{threshold:.35});
+    marks.forEach(function(m){io.observe(m)}); grows.forEach(function(g){io.observe(g)});
+  } else { marks.forEach(function(m){m.classList.remove('pending')}); }
+
+  /* ---------- modal ---------- */
+  var MODALS = {
+    total: '<span class="eyebrow">Datos generales</span><h3 id="modal-title">18.9 millones de víctimas en un año</h3>'+
+      '<p>Es el 21 % de las 90.3 millones de personas de 12 años o más que usaron internet en 2024.</p>'+
+      '<ul><li>Mujeres: 10.6 millones (22.2 %).</li><li>Hombres: 8.3 millones (19.6 %).</li>'+
+      '<li>Periodo: julio de 2023 a agosto de 2024.</li><li>Estados con más casos: Yucatán (29.7 %), San Luis Potosí (26.9 %) e Hidalgo (26.2 %).</li></ul>'+
+      '<p class="cite">Fuente: INEGI (2025), encuesta en 65,067 viviendas.</p>',
+    sexo: '<span class="eyebrow">Por sexo y edad</span><h3 id="modal-title">Las mujeres jóvenes, las más expuestas</h3>'+
+      '<table class="mini"><thead><tr><th>Edad</th><th>Mujeres</th><th>Hombres</th></tr></thead><tbody>'+
+      '<tr><td>12 a 19 años</td><td>26.6 %</td><td>22.9 %</td></tr><tr class="hl"><td>20 a 29 años</td><td>31.1 %</td><td>22.1 %</td></tr>'+
+      '<tr><td>30 a 39 años</td><td>22.8 %</td><td>21.0 %</td></tr><tr><td>40 a 49 años</td><td>18.5 %</td><td>19.6 %</td></tr>'+
+      '<tr><td>50 a 59 años</td><td>16.0 %</td><td>15.1 %</td></tr><tr><td>60 años y más</td><td>11.3 %</td><td>11.8 %</td></tr></tbody></table>'+
+      '<p class="cite">% de personas usuarias de internet de cada grupo que vivió ciberacoso · INEGI (2025)</p>',
+    jovenes: '<span class="eyebrow">Edad universitaria</span><h3 id="modal-title">31.1 % de las mujeres de 20 a 29 años</h3>'+
+      '<p>Casi 1 de cada 3 mujeres en edad universitaria vivió ciberacoso en un año. En los hombres de la misma edad fue 22.1 %.</p>'+
+      '<ul><li>Las mujeres reciben más insinuaciones sexuales (29.0 % contra 13.9 % de los hombres).</li>'+
+      '<li>También reciben más contenido sexual no solicitado (27.5 % contra 15.8 %).</li>'+
+      '<li>Cuando identificaron a su agresor, 87.2 % de las mujeres que recibió propuestas sexuales señaló solo a hombres.</li></ul>'+
+      '<p class="cite">Fuente: INEGI (2025)</p>',
+    agresores: '<span class="eyebrow">¿Quién acosa?</span><h3 id="modal-title">La mayoría se esconde en el anonimato</h3>'+
+      '<table class="mini"><tbody><tr class="hl"><td>Solo personas desconocidas</td><td>62.9 %</td></tr><tr><td>Solo personas conocidas</td><td>21.6 %</td></tr>'+
+      '<tr><td>Conocidas y desconocidas</td><td>15.5 %</td></tr></tbody></table>'+
+      '<p>Entre los conocidos destacan las personas de poco trato o solo de vista (17.8 %), amistades (8.7 %), compañeros de clase o trabajo (8.0 %) y exparejas (5.7 %).</p>'+
+      '<p>Entre adolescentes de 12 a 17 años, 61.6 % fue acosado por alguien de su misma edad.</p><p class="cite">Fuente: INEGI (2025)</p>'
+  };
+  var modal = document.getElementById('modal'), box = document.getElementById('modal-box'), lastFocus = null;
+  function openModal(key){
+    lastFocus = document.activeElement;
+    box.innerHTML = MODALS[key] + '<button class="modal-close" type="button" id="modal-close">Cerrar</button>';
+    modal.hidden = false;
+    var c = document.getElementById('modal-close'); c.addEventListener('click', closeModal); c.focus();
+  }
+  function closeModal(){ modal.hidden = true; if(lastFocus) lastFocus.focus(); }
+  modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !modal.hidden) closeModal(); });
+  document.querySelectorAll('[data-modal]').forEach(function(b){ b.addEventListener('click', function(){ openModal(b.getAttribute('data-modal')); }); });
+
+  /* ---------- explorador de situaciones ---------- */
+  var SITS = [
+    {t:'Contacto con identidades falsas', d:'Alguien se acerca con un perfil o nombre que no es real para ganarse tu confianza o engañarte. Es la forma más común en 20 de los 32 estados.', m:36.0, h:36.0, med:['WhatsApp 32.8 %','Llamadas 29.9 %','Facebook 28.7 %']},
+    {t:'Mensajes ofensivos', d:'Insultos, burlas o humillaciones por escrito. Es la forma más común cuando el agresor es alguien conocido (13.4 % de las víctimas).', m:32.4, h:35.9, med:['WhatsApp 46.8 %','Facebook 30.5 %','Llamadas 16.1 %']},
+    {t:'Llamadas ofensivas', d:'Llamadas para insultar, intimidar o molestar, muchas veces desde números desconocidos.', m:21.0, h:24.6, med:['Llamadas de celular 60.0 %','WhatsApp 30.6 %','Facebook 13.4 %']},
+    {t:'Insinuaciones o propuestas sexuales', d:'Mensajes con contenido o propuestas sexuales que la persona no pidió. Afecta más del doble a las mujeres.', m:29.0, h:13.9, med:['Facebook 41.6 %','WhatsApp 29.9 %','Messenger 23.9 %']},
+    {t:'Recibir contenido sexual', d:'Fotos o videos sexuales enviados sin consentimiento.', m:27.5, h:15.8, med:['Facebook 40.2 %','WhatsApp 32.8 %','Messenger 26.4 %']},
+    {t:'Suplantación de identidad', d:'Alguien se hace pasar por ti con tu nombre o tus fotos para publicar, engañar o burlarse.', m:20.5, h:18.9, med:['Facebook 47.0 %','WhatsApp 26.2 %','Llamadas 13.4 %']}
+  ];
+  var detail = document.getElementById('sit-detail');
+  function showSit(i){
+    var s = SITS[i];
+    detail.innerHTML = '<span class="eyebrow">Situación seleccionada</span><h4>'+s.t+'</h4><p>'+s.d+'</p>'+
+      '<div class="split"><div class="split-row"><span>Mujeres</span><div class="track"><div class="fill fill--m" style="width:'+(s.m/40*100)+'%"></div></div><b>'+s.m.toFixed(1)+' %</b></div>'+
+      '<div class="split-row"><span>Hombres</span><div class="track"><div class="fill fill--h" style="width:'+(s.h/40*100)+'%"></div></div><b>'+s.h.toFixed(1)+' %</b></div></div>'+
+      '<div><span class="cite" style="display:block;margin-bottom:8px">Medios más usados por quien acosa</span><div class="chips">'+s.med.map(function(x){return '<span class="chip">'+x+'</span>'}).join('')+'</div></div>'+
+      '<span class="cite">Fuente: INEGI (2025)</span>';
+    document.querySelectorAll('.sit').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-sit') == i ? 'true' : 'false'); });
+  }
+  document.querySelectorAll('.sit').forEach(function(b){ b.addEventListener('click', function(){ showSit(+b.getAttribute('data-sit')); }); });
+  showSit(0);
+
+  /* ---------- gráfica de medios ---------- */
+  var MEDIOS = [['WhatsApp',39.8,40.3,39.3],['Facebook',39.7,43.6,34.8],['Llamadas de celular',29.3,26.4,32.9],['Messenger',16.9,19.3,13.8],['Instagram',12.7,14.0,11.0],['SMS',4.7,4.2,5.3],['TikTok',2.4,2.8,1.9]];
+  var medios = document.getElementById('medios');
+  medios.innerHTML = MEDIOS.map(function(r,i){ return '<div class="bar-row'+(i<2?' hot':'')+'"><span class="name">'+r[0]+'</span><div class="track"><div class="fill" data-i="'+i+'"></div></div><b data-v="'+i+'"></b></div>'; }).join('');
+  function setMedios(k){
+    var col = {t:1,m:2,h:3}[k];
+    MEDIOS.forEach(function(r,i){
+      medios.querySelector('.fill[data-i="'+i+'"]').style.width = (r[col]/45*100)+'%';
+      medios.querySelector('b[data-v="'+i+'"]').textContent = r[col].toFixed(1)+' %';
+    });
+    document.querySelectorAll('[data-medio]').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-medio')===k?'true':'false'); });
+  }
+  document.querySelectorAll('[data-medio]').forEach(function(b){ b.addEventListener('click', function(){ setMedios(b.getAttribute('data-medio')); }); });
+  setMedios('t');
+
+  /* ---------- efectos ---------- */
+  var FEEL = [['Enojo',61.1,55.4],['Desconfianza',39.7,33.0],['Miedo',34.5,16.0],['Inseguridad',33.5,25.8],['Estrés',32.3,27.0],['Frustración',27.3,19.1],['Nervios',22.0,15.6]];
+  var fb = document.getElementById('feel-bars'), feel = document.getElementById('feel');
+  fb.innerHTML = FEEL.map(function(r,i){ return '<div class="bar-row"><span class="name">'+r[0]+'</span><div class="track"><div class="fill" data-f="'+i+'"></div></div><b data-fv="'+i+'"></b></div>'; }).join('');
+  fb.style.display = 'grid'; fb.style.gap = '10px';
+  function setFeel(k){
+    var col = k==='m'?1:2;
+    FEEL.forEach(function(r,i){
+      fb.querySelector('[data-f="'+i+'"]').style.width = (r[col]/65*100)+'%';
+      fb.querySelector('[data-fv="'+i+'"]').textContent = r[col].toFixed(1)+' %';
+    });
+    feel.classList.toggle('is-h', k==='h');
+    document.querySelectorAll('[data-feel]').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-feel')===k?'true':'false'); });
+  }
+  document.querySelectorAll('[data-feel]').forEach(function(b){ b.addEventListener('click', function(){ setFeel(b.getAttribute('data-feel')); }); });
+  setFeel('m');
+
+  /* ---------- pestañas ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  function selectTab(i, focus){
+    tabs.forEach(function(t,j){
+      var on = i===j; t.setAttribute('aria-selected', on?'true':'false'); t.tabIndex = on?0:-1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    if(focus) tabs[i].focus();
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click', function(){ selectTab(i); });
+    t.addEventListener('keydown', function(e){
+      if(e.key==='ArrowRight'){ e.preventDefault(); selectTab((i+1)%tabs.length, true); }
+      if(e.key==='ArrowLeft'){ e.preventDefault(); selectTab((i-1+tabs.length)%tabs.length, true); }
+    });
+  });
+
+  /* ---------- quiz ---------- */
+  var QUIZ = [
+    {c:'Alguien abre una cuenta con tu nombre y tus fotos para publicar burlas sobre tus compañeros.', a:true, f:'Es suplantación de identidad. La vivió 19.8 % de las víctimas. Guarda capturas y reporta la cuenta.'},
+    {c:'En el chat del equipo, un compañero no está de acuerdo con tu idea y lo explica con respeto.', a:false, f:'Un desacuerdo respetuoso no es ciberacoso. El acoso busca dañar o molestar de forma intencional.'},
+    {c:'Cada noche te llegan mensajes de un número desconocido con propuestas sexuales.', a:true, f:'Son insinuaciones o propuestas sexuales no solicitadas. Le pasó a 29.0 % de las mujeres víctimas.'},
+    {c:'Te escriben que publicarán un audio tuyo si no les das dinero.', a:true, f:'Es una amenaza para extorsionar. La vivió 9.9 % de las víctimas. No pagues, guarda evidencia y denuncia al 088.'}
+  ];
+  var qg = document.getElementById('qgrid'), answered = 0;
+  qg.innerHTML = QUIZ.map(function(q,i){ return '<div class="q" id="q'+i+'"><p class="case">'+q.c+'</p><div class="opts"><button type="button" data-q="'+i+'" data-a="1">Sí, es ciberacoso</button><button type="button" data-q="'+i+'" data-a="0">No</button></div><div class="fb" aria-live="polite" hidden></div></div>'; }).join('');
+  qg.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-q]'); if(!b) return;
+    var i = +b.getAttribute('data-q'), q = QUIZ[i], card = document.getElementById('q'+i), f = card.querySelector('.fb');
+    var ok = (b.getAttribute('data-a')==='1') === q.a;
+    if(f.hidden) answered++;
+    card.classList.remove('ok','bad'); card.classList.add(ok?'ok':'bad');
+    f.innerHTML = '<b>'+(ok?'¡Correcto!':'Revisa de nuevo.')+'</b>'+q.f; f.hidden = false;
+    document.getElementById('score').textContent = answered+' de 4 respondidas';
+  });
+
+  /* ---------- respaldo de medios: si el archivo no carga directo, se lee y se incrusta ---------- */
+  function asDataURL(path){ return fetch(path).then(function(r){ if(!r.ok) throw r; return r.blob(); }).then(function(b){ return new Promise(function(res){ var fr=new FileReader(); fr.onload=function(){ res(fr.result); }; fr.readAsDataURL(b); }); }); }
+  function rescue(el, attr, then){
+    var path = el.getAttribute(attr); if(!path || path.indexOf('data:')===0 || el.dataset.rescued) return; el.dataset.rescued='1';
+    asDataURL(path).then(function(u){ el.setAttribute(attr,u); if(el.load) el.load(); if(then) then(); }).catch(function(){});
+  }
+  var video = document.getElementById('video'), vtt = document.getElementById('vtt');
+  video.addEventListener('error', function(){ rescue(video,'src'); });
+  vtt.addEventListener('error', function(){ rescue(vtt,'src'); });
+
+  /* ---------- reproductor de audio ---------- */
+  var audio = document.getElementById('audio');
+  audio.addEventListener('error', function(){ rescue(audio,'src'); });
+  var play = document.getElementById('play'), ico = document.getElementById('play-ico');
+  var wave = document.getElementById('wave'), atime = document.getElementById('atime'), N = 40;
+  for(var w=0; w<N; w++){ var bar=document.createElement('i'); var x=w/N; var h = x<0.6 ? 18+70*Math.pow(x/0.6,1.4)*(0.6+0.4*Math.abs(Math.sin(w*1.7))) : (x<0.64?6:22+12*Math.sin(w)); bar.style.height=Math.max(6,Math.min(100,h))+'%'; wave.appendChild(bar); }
+  function fmt(s){ s=Math.max(0,Math.floor(s||0)); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
+  play.addEventListener('click', function(){
+    if(audio.paused){ audio.play().catch(function(){ if(!audio.dataset.rescued){ atime.textContent='Cargando audio…'; rescue(audio,'src',function(){ audio.play().catch(function(){ atime.textContent='Toca de nuevo para reproducir.'; }); }); } else atime.textContent='No se pudo reproducir. Intenta de nuevo.'; }); }
+    else audio.pause();
+  });
+  audio.addEventListener('play', function(){ play.classList.add('is-playing'); play.setAttribute('aria-label','Pausar audio'); });
+  audio.addEventListener('pause', function(){ play.classList.remove('is-playing'); play.setAttribute('aria-label','Reproducir audio'); });
+  audio.addEventListener('timeupdate', function(){
+    var d = audio.duration || 20, k = audio.currentTime/d;
+    Array.prototype.forEach.call(wave.children, function(b,i){ b.classList.toggle('on', i/N <= k); });
+    atime.textContent = fmt(audio.currentTime)+' / '+fmt(d);
+  });
+
+  /* ---------- lectura en voz alta ---------- */
+  var tts = document.getElementById('tts'), note = document.getElementById('tts-note');
+  var MSG = 'Si lo ves, no lo compartas. Si lo vives, no te calles. Detente antes de enviar. Guarda evidencia. Bloquea y reporta. Pide ayuda y denuncia. En México puedes llamar al cero ochenta y ocho, las veinticuatro horas.';
+  if(!('speechSynthesis' in window)){ tts.hidden = true; }
+  else tts.addEventListener('click', function(){
+    try{
+      if(speechSynthesis.speaking){ speechSynthesis.cancel(); note.textContent=''; return; }
+      var u = new SpeechSynthesisUtterance(MSG); u.lang='es-MX'; u.rate=0.95;
+      var v = speechSynthesis.getVoices().filter(function(x){return /^es/i.test(x.lang)});
+      if(v.length) u.voice = v.find(function(x){return /MX|419|US/.test(x.lang)}) || v[0];
+      u.onend = function(){ note.textContent=''; };
+      speechSynthesis.speak(u); note.textContent='Reproduciendo el mensaje. Toca de nuevo para detenerlo.';
+    }catch(err){ note.textContent='Tu navegador no permite la lectura en voz alta. El mensaje está escrito arriba.'; }
+  });
+
+  /* ---------- copiar ---------- */
+  function copyText(text, btn, label){
+    function done(){ btn.classList.add('done'); btn.textContent='Copiado'; setTimeout(function(){ btn.classList.remove('done'); btn.textContent=label; },1800); }
+    try{
+      navigator.clipboard.writeText(text).then(done, function(){ fallback(); });
+    }catch(e){ fallback(); }
+    function fallback(){
+      var t=document.createElement('textarea'); t.value=text; t.setAttribute('readonly',''); t.style.position='fixed'; t.style.opacity='0';
+      document.body.appendChild(t); t.select(); var ok=false; try{ ok=document.execCommand('copy'); }catch(e){}
+      document.body.removeChild(t); if(ok) done(); else { btn.textContent='Selecciona el texto'; }
+    }
+  }
+  document.querySelectorAll('.copy').forEach(function(b){ b.addEventListener('click', function(){ copyText(b.getAttribute('data-copy'), b, 'Copiar'); }); });
+  var share = document.getElementById('share');
+  share.addEventListener('click', function(){ copyText('https://raw.githack.com/JaredPS03/pp/infografia-ciberacoso/index.html', share, 'Copiar enlace de la infografía'); });
+})();
+</script>
+
+</body>
+</html>
